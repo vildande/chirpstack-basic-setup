@@ -69,10 +69,23 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres/postgres?sslmode=disable
+      LOG_LEVEL: info
+      PG_USERNAME: postgres
+      PG_PASSWORD: postgres
+      PG_HOSTNAME: postgres
+      PG_DATABASE: postgres
+      PG_SSLMODE: disable
+      PG_MAX_OPEN_CONNECTIONS: 10
+      PG_MIN_IDLE_CONNECTIONS: 0
       REDIS_HOST: redis
-      POSTGRESQL_HOST: postgres
+      REDIS_TLS_ENABLED: 'false'
+      REDIS_CLUSTER_ENABLED: 'false'
+      NETWORK_ID_HEX: "000000"
+      API_INTERFACE: 0.0.0.0
+      API_PORT: 8080
+      API_SECRET: you-must-replace-this
       MQTT_BROKER_HOST: mosquitto
+      MQTT_PORT: 1883
     volumes:
       - chirpstack_data:/data
       - chirpstack_config:/etc/chirpstack
@@ -154,23 +167,23 @@ The `chirpstack_configV1` file contains the configuration for ChirpStack, includ
 ```toml
 # Logging.
 [logging]
-level="info"
+level="$LOG_LEVEL" # default value was info
 
 # PostgreSQL configuration.
 [postgresql]
-dsn="postgres://postgres:postgres@$POSTGRESQL_HOST/postgres?sslmode=disable"
-max_open_connections=10
-min_idle_connections=0
+dsn="postgres://$PG_USERNAME:$PG_PASSWORD@$PG_HOSTNAME/$PG_DATABASE?sslmode=$PG_SSLMODE" # default SSLMODE was disable
+max_open_connections=$PG_MAX_OPEN_CONNECTIONS # default value was 10
+min_idle_connections=$PG_MIN_IDLE_CONNECTIONS # default value was 0
 
 # Redis configuration.
 [redis]
 servers=["redis://$REDIS_HOST/"]
-tls_enabled=false
-cluster=false
+tls_enabled=$REDIS_TLS_ENABLED # default value was false
+cluster=$REDIS_CLUSTER_ENABLED # default value was false
 
 # Network related configuration.
 [network]
-net_id="000000"
+net_id="$NETWORK_ID_HEX" # default value was "000000"
 enabled_regions=[
   "as923",
   "as923_2",
@@ -191,14 +204,14 @@ enabled_regions=[
 
 # API interface configuration.
 [api]
-bind="0.0.0.0:8080"
-secret="you-must-replace-this"
+bind="$API_INTERFACE:$API_PORT" # default values were "0.0.0.0" and "8080" 
+secret="$API_SECRET" # default value was "you-must-replace-this"
 
 [integration]
 enabled=["mqtt"]
 
   [integration.mqtt]
-    server="tcp://$MQTT_BROKER_HOST:1883/"
+    server="tcp://$MQTT_BROKER_HOST:$MQTT_PORT/" # default values were mosquitto and 1883
     json=true
 ```
 
