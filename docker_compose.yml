@@ -6,13 +6,23 @@ services:
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres/postgres?sslmode=disable
+      LOG_LEVEL: info
+      PG_USERNAME: postgres
+      PG_PASSWORD: postgres
+      PG_HOSTNAME: postgres
+      PG_DATABASE: postgres
+      PG_SSLMODE: disable
+      PG_MAX_OPEN_CONNECTIONS: 10
+      PG_MIN_IDLE_CONNECTIONS: 0
       REDIS_HOST: redis
-      POSTGRESQL_HOST: postgres
+      REDIS_TLS_ENABLED: 'false'
+      REDIS_CLUSTER_ENABLED: 'false'
+      NETWORK_ID_HEX: "000000"
+      API_INTERFACE: 0.0.0.0
+      API_PORT: 8080
+      API_SECRET: you-must-replace-this
       MQTT_BROKER_HOST: mosquitto
-      TEST_POSTGRESQL_DSN: postgres://postgres:postgres@postgres/postgres?sslmode=disable
-      TEST_REDIS_URL: //redis:6379/1
-      TEST_MOSQUITTO_SERVER: tcp://mosquitto:1883
+      MQTT_PORT: 1883
     volumes:
       - chirpstack_data:/data
       - chirpstack_config:/etc/chirpstack
