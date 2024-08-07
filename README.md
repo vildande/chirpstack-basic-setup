@@ -1,6 +1,6 @@
 # ChirpStack Setup with Portainer
 
-This repository provides the configuration files necessary to set up a basic instance of ChirpStack using Docker and Portainer. ChirpStack is an open-source LoRaWAN Network Server stack that provides all necessary components for running a LoRaWAN network. This setup uses configuration files and settings referenced from the [ChirpStack GitHub repository](https://github.com/chirpstack).
+This repository provides the configuration files necessary to set up a basic instance of ChirpStack using Docker and Portainer. ChirpStack is an open-source LoRaWAN Network Server stack that provides all necessary components for running a LoRaWAN network. This setup uses configuration files and settings referenced from the [ChirpStack GitHub repository](https://github.com/chirpstack/chirpstack).
 
 ## Table of Contents
 
@@ -237,5 +237,5 @@ If you have Portainer installed, you can manage these Docker containers through 
 
 ## References
 
-This setup and configuration are based on the [ChirpStack GitHub repository](https://github.com/chirpstack). Please refer to their documentation for more detailed information about the ChirpStack components and configurations.
+This setup and configuration are based on the [ChirpStack GitHub repository](https://github.com/chirpstack/chirpstack). Please refer to their documentation for more detailed information about the ChirpStack components and configurations.
 
